@@ -2,10 +2,10 @@ local module = {}
 
 module.name                = "dodgeSpeedBar"  -- This HAS to be the same as the filename minus the trailing .lua
 module.opts                = {}
-module.opts.X1_Position     = 0.3
-module.opts.Y1_Position     = 56
-module.opts.X2_Position     = 99.7
-module.opts.Y2_Position     = 56
+module.opts.X1_Position    = 0.3
+module.opts.Y1_Position    = 56
+module.opts.X2_Position    = 99.7
+module.opts.Y2_Position    = 56
 module.opts.Segments       = 10
 module.opts.Margin         = 1
 module.opts.Width          = 12
@@ -15,6 +15,7 @@ module.opts.Dynamic_Color  = true
 module.opts.Full           = rgba(138,43,226,255)
 module.opts.Low            = rgba(0, 255, 255,80)
 module.opts.Empty_Segments = rgba(0,0,0,120)
+module.opts.EnableText	   = false
 
 function module.draw(res_x, res_y)
 	if not hud_data.alive then return end
@@ -31,7 +32,8 @@ function module.draw(res_x, res_y)
 
 	if(val > module.opts.minSpeed) then 
 		for i = 1,module.opts.Segments do
-			color = lerpColor(module.opts.Low, module.opts.Full, i / module.opts.Segments)
+			if(module.opts.Dynamic_Color) then color = lerpColor(module.opts.Low, module.opts.Full, i / module.opts.Segments) else
+			color = module.opts.Full end
 			if i > segments then color = module.opts.Empty_Segments end
 
 			drawRect(x1pos, y1pos, x1pos + module.opts.Width + ((module.opts.Segments - i) * 2), y1pos + module.opts.Height, color)
@@ -39,6 +41,10 @@ function module.draw(res_x, res_y)
 			
 			y1pos = y1pos - module.opts.Margin - module.opts.Height
 			y2pos = y2pos - module.opts.Margin - module.opts.Height
+		end
+		if(module.opts.EnableText) then
+			drawSmallText(val, color, x1pos + (module.opts.Width / 4), module.opts.Y1_Position / 100 * res_y + (module.opts.Height / 2), 0, 1, 1)
+			drawSmallText(val, color, x2pos - (module.opts.Width * 2) - 3, module.opts.Y2_Position / 100 * res_y + (module.opts.Height / 2), 0, 1, 1)
 		end
 	end
 

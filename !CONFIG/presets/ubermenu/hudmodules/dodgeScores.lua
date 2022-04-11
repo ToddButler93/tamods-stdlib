@@ -41,6 +41,10 @@ function module.draw(res_x, res_y)
 				i = i + 1
 				x_FlagSectorR = x_FlagSectorR + x_flagArea
 			end
+		else
+			drawRect(x_FlagSectorR, ypos, x_FlagSectorR + x_flagArea, ypos + y_flagArea, module.opts.bg_color)
+			drawSmallText(game.score(hud_data.right_team), module.opts.flag_color[0], x_FlagSectorR + 5, ypos + 20, 0, 1, 1)
+			x_FlagSectorR = x_FlagSectorR + x_flagArea 
 		end
 		--Draw Enemy Flag Holder
 		if not flag.isHome(hud_data.left_team) then
@@ -70,6 +74,10 @@ function module.draw(res_x, res_y)
 				j = j + 1
 				x_FlagSectorL = x_FlagSectorL - x_flagArea
 			end
+		else
+			drawRect(x_FlagSectorL, ypos, x_FlagSectorL + x_flagArea, ypos + y_flagArea, module.opts.bg_color)
+			drawSmallText(game.score(hud_data.left_team), module.opts.flag_color[2], x_FlagSectorL + 5, ypos + 20, 0, 1, 1)
+			x_FlagSectorL = x_FlagSectorL - x_flagArea 
 		end
 		--Draw Team Flag Holder
 		if not flag.isHome(hud_data.right_team) then
